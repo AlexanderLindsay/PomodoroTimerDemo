@@ -1,13 +1,16 @@
 <template>
   <div id="app">
+    <pomodoro-timer label="My Task"></pomodoro-timer>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import PomodoroTimer from './components/pomodoro-timer.vue';
 
 @Component({
   components: {
+    PomodoroTimer
   },
 })
 export default class App extends Vue {}
