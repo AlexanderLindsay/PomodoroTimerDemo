@@ -1,6 +1,12 @@
 <template>
   <div id="app">
-    <pomodoro-timer label="a Task" v-bind:sections="pomodoroSections"></pomodoro-timer>
+    <h1>Pomodoro Timer</h1>
+    <div class="field">
+      <label>Task
+        <input v-model="task">
+      </label>
+    </div>
+    <pomodoro-timer v-bind:label="task" v-bind:sections="pomodoroSections"></pomodoro-timer>
   </div>
 </template>
 
@@ -15,6 +21,7 @@ import {TimerType, PomodoroSection} from './types/PomodoroSection';
   },
 })
 export default class App extends Vue {
+  task: string = "a task";
   pomodoroSections = [
     PomodoroSection.work(25),
     PomodoroSection.break(5),
@@ -37,5 +44,9 @@ export default class App extends Vue {
   color: #2c3e50;
   background-color: #96CCFF;
   height: 100%;
+}
+
+.field {
+  margin-bottom: 1em;
 }
 </style>

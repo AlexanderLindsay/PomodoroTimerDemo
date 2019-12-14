@@ -3,7 +3,7 @@
         <div class="content" v-bind:class="contentClass">
             <template v-if="isRunning()">
                 <div>
-                    {{ activity }}
+                    {{ activity }} {{ label }}
                 </div>
                 <div>
                     <display-seconds v-bind:total-seconds="remainingSeconds"></display-seconds>
@@ -81,10 +81,10 @@ export default class PomodoroTimer extends Vue {
         this.activity = '';
         if (section.timerType === TimerType.Work) {
             this.contentClass = { working: true };
-            this.activity = `Working on ${this.label}`;
+            this.activity = 'Working on ';
         } else if (section.timerType === TimerType.Break) {
             this.contentClass = { break: true };
-            this.activity = `Taking a Break from ${this.label}`;
+            this.activity = 'Taking a Break from ';
         }
 
         this.remainingSeconds = section.seconds;
