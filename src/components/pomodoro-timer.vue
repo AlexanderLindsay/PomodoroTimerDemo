@@ -9,6 +9,9 @@
                     <display-seconds v-bind:total-seconds="remainingSeconds"></display-seconds>
                     remaining
                 </div>
+                <div>
+                    <button type="button" v-on:click="skip">Skip</button>
+                </div>
             </template>
             <template v-else-if="isStopped()">
                 <div>
@@ -28,7 +31,7 @@
                 Full Cycles Completed: {{ cycles }}
             </div>
             <div>
-                Current Cycle Progress: {{ currentCycle.work }}
+                Current Cycle Work Sections Completed: {{ currentCycle.work }}
             </div>
         </div>
     </div>
@@ -83,7 +86,7 @@ export default class PomodoroTimer extends Vue {
             this.contentClass = { working: true };
             this.activity = 'Working on ';
         } else if (section.timerType === TimerType.Break) {
-            this.contentClass = { break: true };
+            this.contentClass = { onbreak: true };
             this.activity = 'Taking a Break from ';
         }
 
@@ -92,10 +95,14 @@ export default class PomodoroTimer extends Vue {
       }
   }
 
+  skip () {
+      this.remainingSeconds = 0;
+  }
+
   private tick () {
       this.remainingSeconds--;
 
-      if(this.remainingSeconds === 0) {
+      if(this.remainingSeconds <= 0) {
           this.finishSection();
       }
   }
@@ -132,6 +139,7 @@ export default class PomodoroTimer extends Vue {
   private reset () {
       this.currentCycle = { work: 0, break: 0 };
       this.state = TimerState.NotStarted;
+      this.contentClass = {};
       this.cycles++;
   }
 }
@@ -157,13 +165,13 @@ export default class PomodoroTimer extends Vue {
     }
 
     .paused {
-        --content-background: ##FFDFDF;
+        --content-background: #FFDFDF;
     }
 
     .content {
         background-color: var(--content-background);
         grid-area: content;
-        font-size: 5em;
+        font-size: 4em;
     }
 
     button {
